@@ -1,3 +1,4 @@
+const Course = require('../models/course');
 const courseModel = require('../models/course');
 
 exports.createCourse = async (req, res) => {
@@ -13,4 +14,20 @@ exports.createCourse = async (req, res) => {
       err,
     });
   }
+};
+
+exports.getAllCourses = async (req, res) => {
+  const allcourses = await courseModel.find();
+  res.render('courses', {
+    page_name: 'courses',
+    courses: allcourses,
+  });
+};
+
+exports.getCourse = async (req, res) => {
+  const course = await Course.findById({ _id: req.params.id });
+  res.render('course-single', {
+    course,
+    page_name: 'course-single',
+  });
 };
